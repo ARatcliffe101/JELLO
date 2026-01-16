@@ -37,15 +37,6 @@ JELLO is your personal project and task management desktop application.
 3. Run `./install.sh`
 4. Run `./run.sh`
 
-## Create Installer (Optional)
-
-### Windows:
-- Run `BUILD-INSTALLER.bat`
-- Installer will be in `dist/` folder
-
-### Mac:
-- Run `./build-installer.sh`
-- DMG will be in `dist/` folder
 
 ## Data Location
 
