@@ -104,23 +104,3 @@ This package includes sample CSV files in the `sample_csvs/` folder that you can
 
 Changes are saved via your existing autosave/manual save flow.
 
-## Building a Windows .exe installer
-
-This project uses **electron-builder** with an **NSIS** target.
-
-### On Windows (recommended)
-1. Install Node.js (LTS).
-2. Open Command Prompt in the app folder.
-3. Run:
-
-   npm install
-   npm run build-win
-
-The installer will be created in the **dist/** folder (an NSIS “Setup” .exe).
-
-You can also run:
-
-   BUILD-INSTALLER.bat
-
-### From macOS
-Windows builds from macOS typically require extra tooling (Wine/Mono for NSIS). If you want a reliable .exe, build on a Windows machine.
