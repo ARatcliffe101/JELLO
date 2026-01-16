@@ -1,0 +1,15 @@
+#STAGES
+stageName,status
+Discovery,not-started
+Delivery,not-started
+
+#TASKS
+stageName,taskName,completed,assignedTo,dueDate,details
+Discovery,Confirm objectives,false,,,
+Discovery,Assemble stakeholders,false,,,
+Delivery,Deliver draft plan,false,,,
+
+#CHECKLISTS
+stageName,item,completed
+Discovery,Objectives agreed,false
+Delivery,Draft reviewed,false

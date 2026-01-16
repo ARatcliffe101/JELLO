@@ -1,0 +1,3 @@
+@echo off
+echo Starting JELLO...
+npm start

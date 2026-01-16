@@ -1,0 +1,19 @@
+#STAGES
+stageName,status
+Planning,in-progress
+Execution,not-started
+Review,not-started
+
+#TASKS
+stageName,taskName,completed,assignedTo,dueDate,details
+Planning,Define scope,false,Anthony,2026-01-05,Create scope document and success criteria
+Planning,Stakeholder review,false,,2026-01-10,Collect feedback and confirm scope
+Execution,Build prototype,false,,2026-02-01,First working prototype
+Review,Final sign-off,false,,2026-03-01,Get approval and close project
+
+#CHECKLISTS
+stageName,item,completed
+Planning,Requirements signed off,false
+Planning,Risks logged,false
+Execution,Prototype demo delivered,false
+Review,All docs archived,false

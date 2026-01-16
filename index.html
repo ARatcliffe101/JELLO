@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JELLO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="jello-logo.png">
+</head>
+<body>
+  <!-- JELLO Branding Header -->
+  <header class="brand-header">
+  <div class="brand-wrap">
+    <img src="jello-logo.png" alt="JELLO" class="brand-logo" />
+    <div class="brand-text">
+      <div class="brand-title">JELLO</div>
+      <div class="brand-subtitle">Job, Events, Logs &amp; Links Organiser</div>
+    </div>
+  </div>
+</header>
+
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <header class="app-header">
+            <h1>Project Stage Tracker</h1>
+<nav class="main-nav">
+                <button class="nav-btn active" data-view="projects">📋 Projects</button>
+                <button class="nav-btn" data-view="overview">📊 Overview</button>
+                <button class="nav-btn" data-view="templates">📋 Templates</button>
+                <button class="btn btn--primary" id="exportBtn">📥 Export to Excel</button>
+            </nav>
+        </header>
+
+        <!-- Projects View -->
+        <div class="view-container active" id="projectsView">
+            <div class="view-header">
+                <h2>Projects</h2>
+                <button class="btn btn--primary" id="addProjectBtn">+ Add Project</button>
+            </div>
+            <div class="projects-grid" id="projectsGrid"></div>
+        </div>
+
+        <!-- Overview View -->
+        <div class="view-container" id="overviewView">
+            <div class="view-header">
+                <h2>Global Overview</h2>
+            </div>
+            <div class="overview-stats" id="overviewStats"></div>
+            <div class="recent-updates" id="recentUpdates">
+                <h3>Recent Updates</h3>
+                <div id="recentUpdatesList"></div>
+            </div>
+            <div class="project-quick-links" id="projectQuickLinks">
+                <h3>Quick Links</h3>
+                <div id="quickLinksList"></div>
+            </div>
+        </div>
+
+        <!-- Templates View -->
+        <div class="view-container" id="templatesView">
+            <div class="view-header">
+                <h2>Stage Templates</h2>
+                <button class="btn btn--primary" id="addTemplateBtn">+ Add Template</button>
+            </div>
+            <div class="templates-list" id="templatesList"></div>
+        </div>
+    </div>
+
+    <!-- Stage Detail Modal -->
+    <div class="modal" id="stageModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="stageModalTitle"></h2>
+                <button class="modal-close" id="closeStageModal">&times;</button>
+            </div>
+            <div class="stage-status-bar">
+                <div class="form-group">
+                    <label class="form-label">Stage Status</label>
+                    <select class="form-control" id="stageStatus">
+                        <option value="not-started">Not Started</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-group" id="completionDateGroup" style="display: none;">
+                    <label class="form-label">Completion Date</label>
+                    <input type="date" class="form-control" id="stageCompletionDate">
+                </div>
+            </div>
+            <div class="modal-tabs">
+                <button class="modal-tab-btn active" data-tab="tasks">Tasks</button>
+                <button class="modal-tab-btn" data-tab="updates">Updates</button>
+                <button class="modal-tab-btn" data-tab="files">Files</button>
+                <button class="modal-tab-btn" data-tab="checklists">Checklists</button>
+            </div>
+            <div class="modal-body">
+                <!-- Tasks Tab -->
+                <div class="modal-tab-content active" id="tasksTab">
+                    <div class="tab-actions">
+                        <button class="btn btn--primary" id="addTaskBtn">+ Add Task</button>
+                    </div>
+                    <div class="tasks-list" id="tasksList"></div>
+                </div>
+
+                <!-- Updates Tab -->
+                <div class="modal-tab-content" id="updatesTab">
+                    <div class="update-form">
+                        <textarea class="form-control" id="updateText" placeholder="Write an update..."></textarea>
+                        <div class="update-form-controls">
+                            <select class="form-control" id="updateTaskSelect">
+                                <option value="">No task assigned</option>
+                            </select>
+                            <input type="date" class="form-control" id="updateDate">
+                            <button class="btn btn--primary" id="postUpdateBtn">Post Update</button>
+                        </div>
+                    </div>
+                    <div class="updates-list" id="updatesList"></div>
+                </div>
+
+                <!-- Files Tab -->
+                <div class="modal-tab-content" id="filesTab">
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <p>📁 Drag &amp; drop files here or click to upload</p>
+                        <input type="file" id="fileInput" multiple style="display: none;">
+                    </div>
+                    <div class="files-list" id="filesList"></div>
+                </div>
+
+                <!-- Checklists Tab -->
+                <div class="modal-tab-content" id="checklistsTab">
+                    <div class="tab-actions">
+                        <input type="text" class="form-control" id="newChecklistItem" placeholder="Add checklist item...">
+                        <button class="btn btn--primary" id="addChecklistItemBtn">+ Add Item</button>
+                    </div>
+                    <div class="checklists-list" id="checklistsList"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Settings Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="projectModalTitle">Project Settings</h2>
+                <button class="modal-close" id="closeProjectModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Project Name</label>
+                    <input type="text" class="form-control" id="projectName">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="projectDescription"></textarea>
+                </div>
+
+                <div class="form-group">
+    <label class="form-label">Import stages/tasks/checklists (CSV)</label>
+    <div class="inline-actions">
+        <button class="btn btn--outline" type="button" id="projectImportCsvBtn">Choose CSV…</button>
+        <button class="btn btn--ghost" type="button" id="projectClearImportBtn" style="display:none;">Clear</button>
+        <button class="btn" type="button" id="projectPreviewImportBtn" style="display:none;">Preview</button>
+    </div>
+
+    <div class="import-options" id="projectImportOptions" style="display:none;">
+        <label class="form-label" style="margin-top:10px;">Import mode</label>
+        <select class="form-control" id="projectImportMode">
+            <option value="replace">Replace stages with import</option>
+            <option value="merge">Merge import into existing stages</option>
+        </select>
+        <p class="hint-text">Replace will overwrite stages (and remove existing tasks/checklists in those stages). Merge will add tasks/checklists into matching stage names and create any missing stages.</p>
+    </div>
+
+    <div class="hint-text" id="projectImportSummary">No import selected</div>
+</div>
+
+                <div class="form-group">
+                    <label class="form-label">Owner</label>
+                    <input type="text" class="form-control" id="projectOwner">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Budget</label>
+                    <input type="number" class="form-control" id="projectBudget">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="projectStartDate">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn--primary" id="saveProjectBtn">Save Changes</button>
+                    <button class="btn btn--outline" id="deleteProjectBtn">Delete Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Modal -->
+    <div class="modal" id="templateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Template Settings</h2>
+                <button class="modal-close" id="closeTemplateModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Template Name</label>
+                    <input type="text" class="form-control" id="templateName">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Stages (comma-separated)</label>
+                    <input type="text" class="form-control" id="templateStages" placeholder="e.g., Planning, Design, Development">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn--primary" id="saveTemplateBtn">Save Template</button>
+                    <button class="btn btn--outline" id="deleteTemplateBtn">Delete Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div class="modal" id="addTaskModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Add Task</h2>
+                <button class="modal-close" id="closeAddTaskModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Task Name</label>
+                    <input type="text" class="form-control" id="taskName">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Assigned To</label>
+                    <input type="text" class="form-control" id="taskAssignedTo">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Due Date</label>
+                    <input type="date" class="form-control" id="taskDueDate">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn--primary" id="saveTaskBtn">Add Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="chartModal">
+        <div class="modal-content modal-content--wide">
+            <div class="modal-header">
+                <h2 id="chartModalTitle">Project Chart</h2>
+                <button class="modal-close" id="closeChartModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="chart-container" id="chartContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="modal-close" id="closeSettingsModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <section class="settings-section">
+                    <h3>Data Location</h3>
+                    <p id="currentDataPathLabel">Current data folder: <span id="currentDataPath">(not set)</span></p>
+                    <div class="modal-actions">
+                        <button class="btn btn--primary" id="changeDataLocationBtn">Change Data Folder</button>
+                        <button class="btn btn--outline" id="openDataFolderBtn">Open Data Folder</button>
+                    </div>
+                </section>
+
+                <section class="settings-section">
+                    <h3>Database</h3>
+                    <div class="form-group">
+                        <label class="form-label">Active Database</label>
+                        <select class="form-control" id="databaseSelector"></select>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn--primary" id="saveDatabaseBtn">Save Database Snapshot</button>
+                        <button class="btn btn--outline" id="loadDatabaseBtn">Load Selected Database</button>
+                    </div>
+                </section>
+
+                <section class="settings-section">
+                    <h3>Import / Export</h3>
+                    <div class="modal-actions">
+                        <button class="btn" id="importCsvBtn">Import CSV</button>
+                                                <button class="btn" id="exportCsvBtn">Export CSV</button>
+                    </div>
+                    <p class="hint-text">Import lets you map CSV columns to JELLO fields before loading.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal" id="importPreviewModal">
+        <div class="modal-content modal-content--wide">
+            <div class="modal-header">
+                <h2>Import Preview</h2>
+                <button class="close-modal" id="closeImportPreviewModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="import-preview-summary" id="importPreviewSummary"></div>
+                <div class="import-preview-grid" id="importPreviewGrid"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline" id="closeImportPreviewBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+<script src="app.js"></script>
+    <button class="icon-button icon-button--fab" id="settingsBtn" title="Settings">⚙</button>
+<footer class="app-footer">
+  <span>ASR 2025</span>
+</footer>
+</body>
+</html>

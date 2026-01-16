@@ -1,0 +1,9 @@
+stage,type,task,checklist,completed,duedate,details,assignedTo
+Planning,task,Define scope,,false,2026-01-05,Create scope document and success criteria,Anthony
+Planning,task,Stakeholder review,,false,2026-01-10,Collect feedback and confirm scope,
+Planning,checklist,,Requirements signed off,false,,,
+Planning,checklist,,Risks logged,false,,,
+Execution,task,Build prototype,,false,2026-02-01,First working prototype,
+Execution,checklist,,Prototype demo delivered,false,,,
+Review,task,Final sign-off,,false,2026-03-01,Get approval and close project,
+Review,checklist,,All docs archived,false,,,
